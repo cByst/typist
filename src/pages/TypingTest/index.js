@@ -78,10 +78,33 @@ export default class Main extends Component {
   };
 
   backspace = () => {
-    const { index } = this.state;
+    const { index, letters } = this.state;
+    if (index === 0 && letters[0].done) {
+      const newLetters = letters.map((letter, letterIndex) => {
+        if (letterIndex === 0) {
+          let tempLetter = letter;
+          tempLetter.done = false;
+          return tempLetter;
+        } else {
+          return letter;
+        }
+      });
+      this.setState({letters: newLetters})
+      return;
+    }
     if (index === 0) return;
+    const newLetters = letters.map((letter, letterIndex) => {
+      if (index === letterIndex) {
+        let tempLetter = letter;
+        tempLetter.done = false;
+        return tempLetter;
+      } else {
+        return letter;
+      }
+    });
     this.setState({
-      index: index - 1
+      index: index - 1,
+      letters: newLetters,
     });
   };
 
